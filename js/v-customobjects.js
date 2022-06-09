@@ -15,7 +15,18 @@ const trackedKeys = [
 
 // Decorate the head of our guests
 Vue.component("obj-head", {
-  template: `<a-entity>
+  template: `
+  <a-entity 
+      v-if="fake"
+  >
+      <a-entity 
+        gltf-model="url(models/kirby/scene.gltf)"
+        scale="0.2 0.2 0.2"
+        rotation="0 180 0"
+        position="0 -1.5 0"
+      ></a-entity>
+	</a-entity>
+  <a-entity v-else>
 
 		<a-sphere 
 			shadow
@@ -85,6 +96,9 @@ Vue.component("obj-head", {
     },
     headSize() {
       return this.obj.size instanceof Vector ? this.obj.size.x : this.obj.size;
+    },
+    fake() {
+      return this.obj.uid.slice(0, 5) === "FAKE_";
     },
   },
 
@@ -399,12 +413,13 @@ Vue.component("obj-world", {
 			rotation = "0 270 0">
       scale="1.5 1.5 1.5">
 		</a-entity>
-
+  <!---
 		<a-entity gltf-model="url(models/kirby/scene.gltf)" 
 			position="-5 0 -6"
 			rotation = "0 30 0"
       scale="0.2 0.2 0.2">
 		</a-entity>
+    --->
 
 
 	</a-entity>
